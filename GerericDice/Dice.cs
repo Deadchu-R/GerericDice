@@ -13,6 +13,7 @@ namespace GerericDice
 
         }
 
+  
         public override int Roll()
         {
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GerericDice
 {
-    internal class DeckInt : GenericDeck<int>
+    internal class DeckInt : GenericDeck<int>, IComparable<int>
     {
 
         public int Size;
@@ -49,10 +49,7 @@ namespace GerericDice
             Remaining = deck.Count;
         }
 
-        public override int Peek()
-        {
-            throw new NotImplementedException();
-        }
+
 
         public int Draw()
         {
@@ -69,6 +66,8 @@ namespace GerericDice
                 return drawCard;
 
         }
+
+        
 
         public override void Shuffle()
         {
@@ -100,7 +99,6 @@ namespace GerericDice
                     Console.WriteLine($"deck item:{i} is {deck[i]}");
 
                 }
-
 
             }
         }
@@ -138,18 +136,37 @@ namespace GerericDice
                 {
                     int randomPlace = rand.Next(remainingCards.Count);
                     ShuffledCards.Add(remainingCards[randomPlace]);
+                    remainingCards.RemoveAt(randomPlace);
 
 
                 }
 
 
-                for (int i = 0; i < deck.Count; i++)
+                for (int i = 0; i < ShuffledCards.Count; i++)
                 {
                     deck[i] = ShuffledCards[i];
                     Console.WriteLine($"deck item:{i} is {deck[i]}");
                 }
                 discardPile.Clear();
 
+            }
+        }
+
+
+        public int Value { get; set; }
+        public int CompareTo(int other)
+        {
+            if (this.Value < other)
+            {
+                return -1;
+            }
+            else if (this.Value > other)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
             }
         }
     }
