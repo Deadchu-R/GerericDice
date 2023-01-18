@@ -6,6 +6,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
+// ---- C# II (Dor Ben Dor) ----
+// Roee Tal & Amit Kremer
+// -----------------------------
+
 namespace GerericDice
 {
    abstract class GenericDeck<T>  where T : struct, IComparable<T>
@@ -14,14 +18,16 @@ namespace GerericDice
         public int Size;
         public int Remaining;
 
-        List<T> deck;
-        List<T> discardPile;
+        protected List<T> deck;
+        protected List<T> discardPile;
 
        public GenericDeck(int bagSize)
         {
             this.Size = bagSize;
+         
      
             deck = new List<T>(bagSize);
+            discardPile = new List<T>();
         }
 
 
@@ -34,7 +40,7 @@ namespace GerericDice
            return drawCard;
 
        }
-        public  bool TryDraw<T>(T card) 
+        public  bool TryDraw() 
         {
            if (deck.Count > 0)
             {

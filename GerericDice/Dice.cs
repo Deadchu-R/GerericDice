@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// ---- C# II (Dor Ben Dor) ----
+// Roee Tal & Amit Kremer
+// -----------------------------
+
 namespace GerericDice
 {
     class Dice : GenericDice<int>

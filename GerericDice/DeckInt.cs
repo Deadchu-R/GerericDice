@@ -4,17 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// ---- C# II (Dor Ben Dor) ----
+// Roee Tal & Amit Kremer
+// -----------------------------
+
 namespace GerericDice
 {
     internal class DeckInt : GenericDeck<int>, IComparable<int>
     {
-
-        public int Size;
-        public int Remaining;
-        List<int> deck = new List<int>();
-        List<int> discardPile = new List<int>();
-
-
 
         public DeckInt(int bagSize) : base(bagSize)
         {
@@ -30,7 +27,6 @@ namespace GerericDice
             Console.WriteLine("deck size at start is:" + deck.Count);
 
         }
-
 
         public void FillDeck(int minNum, int maxNum)
         {
@@ -49,25 +45,13 @@ namespace GerericDice
             Remaining = deck.Count;
         }
 
-
-
         public int Draw()
         {
-            // Random rand = new Random();
-            //int drawnCardNum = rand.Next(deck.Count);
-            //int drawnCard = deck[drawnCardNum];
-            //discardPile.Add(drawnCard);
-            //deck.RemoveAt(drawnCardNum);
-            //Remaining = deck.Count;
-        
                 int drawCard = deck[0];
                 discardPile.Add(drawCard);
                 deck.RemoveAt(0);
                 return drawCard;
-
         }
-
-        
 
         public override void Shuffle()
         {
@@ -152,23 +136,11 @@ namespace GerericDice
             }
         }
 
-
-        public int Value { get; set; }
         public int CompareTo(int other)
         {
-            if (this.Value < other)
-            {
-                return -1;
-            }
-            else if (this.Value > other)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            throw new NotImplementedException();
         }
+
     }
 }
 

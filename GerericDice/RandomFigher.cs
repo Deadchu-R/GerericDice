@@ -5,6 +5,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+// ---- C# II (Dor Ben Dor) ----
+// Roee Tal & Amit Kremer
+// -----------------------------
+
 namespace GerericDice
 {
     internal class RandomFigher<T> where T : struct, IComparable<T>
@@ -13,7 +17,7 @@ namespace GerericDice
         bool figherSimulation = true;
         DeckInt randomFigherDeck1 = new DeckInt(40);
         private Dice randomFigherDice1 = new Dice(1, 20);
-        private CompareItem compareItem = new CompareItem();
+
 
         public void StartSimulation(GenericDeck<T> deck, GenericDice<T> dice) 
         {
@@ -27,18 +31,18 @@ namespace GerericDice
             while (figherSimulation)
             {
 
-                if (deck.TryDraw(randomFigherDeck1))
+                if (deck.TryDraw())
                 {
                     deckCardVal = deck.Draw();
                     diceVal = dice.Roll();
                     int compareVal = deckCardVal.CompareTo(diceVal);
                     Console.WriteLine("compare value is:" + compareVal);
 
-                    if (deckCardVal > diceVal)
+                    
                    
-                    //if (compareVal == -1) diceWins++;
-                    //if (compareVal == 0) draws++;
-                    //if (compareVal == 1) deckWins++;
+                    if (compareVal == -1) diceWins++;
+                    if (compareVal == 0) draws++;
+                    if (compareVal == 1) deckWins++;
 
                 }
 
@@ -55,7 +59,7 @@ namespace GerericDice
             randomFigherDeck1.FillDeck(1, 20);
             while (drawTimes >= 0)
             {
-                if (randomFigherDeck1.TryDraw(0))
+                if (randomFigherDeck1.TryDraw())
                 {
                     Console.WriteLine(randomFigherDeck1.Draw());
                 }
@@ -68,12 +72,7 @@ namespace GerericDice
             Console.WriteLine(randomFigherDeck1.Draw());
             randomFigherDeck1.ReShuffle();
 
-
-
-
-
         }
-
 
     }
 }

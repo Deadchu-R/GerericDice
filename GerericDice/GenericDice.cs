@@ -5,6 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// ---- C# II (Dor Ben Dor) ----
+// Roee Tal & Amit Kremer
+// -----------------------------
+
 namespace GerericDice
 {
     abstract class GenericDice<T> : IComparable
@@ -44,8 +48,6 @@ namespace GerericDice
 
             return a * 100 + b * 10;
         }
-
-
 
         public int CompareTo(object? obj)
         {
