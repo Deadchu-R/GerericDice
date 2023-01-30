@@ -11,22 +11,45 @@ using System.Threading.Tasks;
 
 namespace GerericDice
 {
-    abstract class GenericDice<T> : IComparable
+    class GenericDice<T> where T : struct, IComparable<T>
     {
-        public uint _die; // how many dice
-        public uint _scalar; // how many times die will roll
+        private uint _numberOfSides;
 
-        public GenericDice(uint die, uint scalar)
+        private List<T> _valuesOfSides;
+
+
+        public GenericDice( List<T> valuesOfSides)
         {
-            this._die = die;
-            this._scalar = scalar;
+            this._numberOfSides = (uint)valuesOfSides.Count;
+            this._valuesOfSides = new List<T>();
+
+            foreach (T value in valuesOfSides)
+            {
+                _valuesOfSides.Add(value);
+            }
+
         }
-        public abstract T Roll();
-      
+        public T Roll()
+        {
+
+
+            Random rnd = new Random();
+
+            int diceSideIndex = rnd.Next(0, _valuesOfSides.Count);
+
+            T value = _valuesOfSides[diceSideIndex];
+
+            return value;
+        }
+
+
+
+
+
 
         public override string ToString()
         {
-            return $"die type:{_die}sides, times to roll:{_scalar},  ";
+            return $"die type:{_numberOfSides}sides,   ";
 
         }
         public override bool Equals([NotNullWhen(true)] object? obj)
@@ -42,16 +65,13 @@ namespace GerericDice
         }
         public override int GetHashCode()
         {
-            int a = (int)this._die;
-            int b = (int)this._scalar;
+            int a = (int)this._numberOfSides;
 
 
-            return a * 100 + b * 10;
-        }
 
-        public int CompareTo(object? obj)
-        {
-            throw new NotImplementedException();
+            return a * 100;
         }
     }
+
 }
+

@@ -12,56 +12,125 @@ using System.Threading.Tasks;
 
 namespace GerericDice
 {
-   abstract class GenericDeck<T>  where T : struct, IComparable<T>
+    class GenericDeck<T> where T : struct, IComparable<T>
     {
 
         public int Size;
         public int Remaining;
 
-        protected List<T> deck;
-        protected List<T> discardPile;
+        private List<T> deck;
+        private List<T> discardPile;
 
-       public GenericDeck(int bagSize)
+
+        public GenericDeck(List<T> Cards)
         {
-            this.Size = bagSize;
-         
-     
-            deck = new List<T>(bagSize);
+            this.Size = Cards.Count;
+            deck = new List<T>();
+            foreach (T item in Cards)
+            {
+                deck.Add(item);
+            }
+
             discardPile = new List<T>();
         }
 
-
-       public virtual T Draw()
-       {
-
-           T drawCard = this.deck[0];
-           this.discardPile.Add(drawCard);
-          this.deck.RemoveAt(0);
-           return drawCard;
-
-       }
-        public  bool TryDraw() 
+        public virtual T Draw()
         {
-           if (deck.Count > 0)
+            Console.WriteLine(this.deck[0]);
+            T drawCard = this.deck[0];
+            this.discardPile.Add(drawCard);
+            this.deck.RemoveAt(0);
+            return drawCard;
+
+        }
+        public bool TryDraw()
+        {
+            if (deck.Count > 0)
             {
                 return true;
             }
             else return false;
 
-
         }
 
-        abstract public void Shuffle();
 
-        abstract public void ReShuffle();
-       
-         public T Peek()
-         {
-             T card;
+        public void Shuffle()
+        {
+            Console.WriteLine("Shuffling...");
+            if (Remaining > 0)
+            {
+                List<T> remainingCards = new List<T>();
+                for (int i = 0; i < deck.Count; i++)
+                {
+                    remainingCards.Add(deck[i]);
+                }
+
+                List<T> ShuffledCards = new List<T>();
+
+                Random rand = new Random();
+                for (int i = 0; i < remainingCards.Count; i++)
+                {
+                    int randomPlace = rand.Next(remainingCards.Count);
+                    ShuffledCards.Add(remainingCards[randomPlace]);
+                }
+
+
+                for (int i = 0; i < deck.Count; i++)
+                {
+                    deck[i] = ShuffledCards[i];
+                }
+
+            }
+        }
+
+        public void ReShuffle()
+        {
+
+            int discardPileCardCount = discardPile.Count;
+            if (discardPileCardCount > 0)
+            {
+                List<T> remainingCards = new List<T>();
+                for (int i = 0; i < deck.Count; i++)
+                {
+                    remainingCards.Add(deck[i]);
+                }
+
+
+                List<T> ShuffledCards = new List<T>();
+
+                Random rand = new Random();
+                for (int i = 0; i < discardPile.Count; i++)
+                {
+                    remainingCards.Add(discardPile[i]);
+                    deck.Add(discardPile[i]);
+                    discardPileCardCount--;
+
+                }
+
+                for (int i = 0; i < remainingCards.Count; i++)
+                {
+                    int randomPlace = rand.Next(remainingCards.Count);
+                    ShuffledCards.Add(remainingCards[randomPlace]);
+                    remainingCards.RemoveAt(randomPlace);
+                }
+
+
+                for (int i = 0; i < ShuffledCards.Count; i++)
+                {
+                    deck[i] = ShuffledCards[i];
+                }
+                discardPile.Clear();
+
+            }
+        }
+
+        public T Peek()
+        {
+            T card;
             if (deck.Count > 0)
             {
-               card = this.deck[0];
-              return card;
+                card = this.deck[0];
+                return card;
             }
 
             else
@@ -69,7 +138,7 @@ namespace GerericDice
                 Console.WriteLine("no cards in the deck, card is:" + default(T));
                 return default(T);
             }
-         }
+        }
 
 
     }

@@ -14,13 +14,16 @@ namespace GerericDice
     internal class RandomFigher<T> where T : struct, IComparable<T>
 
     {
+  
         bool figherSimulation = true;
-        DeckInt randomFigherDeck1 = new DeckInt(40);
-        private Dice randomFigherDice1 = new Dice(1, 20);
+        //private GenericDeck<T> randomFigherDeck1;
+        //private GenericDice<T> randomFigherDice1;
 
 
         public void StartSimulation(GenericDeck<T> deck, GenericDice<T> dice) 
         {
+         
+     
             T deckCardVal;
             T diceVal;
             
@@ -54,25 +57,7 @@ namespace GerericDice
             }
         }
 
-        public void UseDeck(int drawTimes)
-        {
-            randomFigherDeck1.FillDeck(1, 20);
-            while (drawTimes >= 0)
-            {
-                if (randomFigherDeck1.TryDraw())
-                {
-                    Console.WriteLine(randomFigherDeck1.Draw());
-                }
-
-                drawTimes--;
-            }
-
-            randomFigherDeck1.Shuffle();
-            Console.WriteLine(randomFigherDeck1.Draw());
-            Console.WriteLine(randomFigherDeck1.Draw());
-            randomFigherDeck1.ReShuffle();
-
-        }
-
     }
+
 }
+
